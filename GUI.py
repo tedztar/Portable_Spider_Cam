@@ -1,16 +1,14 @@
 from tkinter import *
 
-# Creates a window as an Object.
 class SampleApp(Tk):
-
-   # Sets up the window.
+   
    def __init__(self):
       
-      Tk.__init__(self)  # SampleApp = Tk()
-      container = Frame(self) #  Window = Frame(SampleApp)
+      Tk.__init__(self) 
+      container = Frame(self)
 
 
-      # Screen Adjustment.
+
       screen_width = (self.winfo_screenwidth())
       screen_height = (self.winfo_screenheight()/1.1)
 
@@ -30,10 +28,9 @@ class SampleApp(Tk):
       container.grid_columnconfigure(0, weight = 1)
 
       
-      # Empty list of useable frames.
-      self.frames = {}
 
-      # If you wish to add more frames, put the name in here, then create a new object.
+      self.frames = {}
+      
       for Frame_name in (StartPage, SecondPage):
 
          frame = Frame_name(container, self)
@@ -45,7 +42,6 @@ class SampleApp(Tk):
 
       self.show_frame(StartPage)
 
-   # Show a certain Frame.
    def show_frame(self, cont):
       
       frame = self.frames[cont]
@@ -55,7 +51,7 @@ class SampleApp(Tk):
 
 
 
-# First Page. Self is the Frame itself. Parent is the container. Controller is the SampleApp.
+
 class StartPage(Frame):
 
    def __init__(self, parent, controller):
@@ -210,7 +206,7 @@ class StartPage(Frame):
                          orient=HORIZONTAL)
       SpeedScale.grid(row = 4, column = 8, sticky="nsew")
 
-# Second Page.
+
 class SecondPage(Frame):
    
    def __init__(self, parent, controller):
@@ -385,7 +381,6 @@ class SecondPage(Frame):
                       height = int(screen_height/200))
       SpeedDecrease.grid(row = 5, column = 8, columnspan = 2, sticky="nsew")
 
-#Loops Program.
 if __name__ == "__main__":
    
    app = SampleApp()

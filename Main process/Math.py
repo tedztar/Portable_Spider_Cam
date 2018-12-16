@@ -1,3 +1,8 @@
+#Need to set in config
+Barrel_circumfrence = 1 #will be set in config file
+Barrel_gears = 10
+Motor_gears = 1
+
 #Imported used library's
 import math
 
@@ -23,6 +28,9 @@ class motor:
           self.length = int()
           self.equation=[]
           self.wirespeed=int()
+          self.rotaionneeded=int()
+          self.barrelrotationspeed=int()
+          self.motorspeed=int()
      
     #calculates the lenght of the wire for any given motor
      def getlength(self):
@@ -35,18 +43,15 @@ class motor:
          self.wirespeed= ((self.equation[0]*xspeed) + (self.equation[1]*yspeed) + (self.equation[2]*zspeed))/self.length
      
     #calculates the number of rotations the motor needs to preform
-    def motorrotation(self):
-        """Calculate howmany rotations of the barrel from length of wire
-        Calculate the number of rotationstions of motor from the number of rotations of the barrel
-        """
-        print()
+     def motorrotation(self):
+        self.getlength()
+        self.rotationneeded=self.length/Barrel_circumfrence
 
     #calculates the rate that the motor needs to be spinning at to give the required wire speed
      def motorspeed(self):
-         """calculate the rotational speed of the barel from the speed required of the wire
-         calculate the speed of the motor from the speed of the barrel
-         """
-         print()
+         self.getwirespeed()
+         self.barrelrotationspeed=self.wirespeed/Barrel_circumfrence
+         self.motorspeed=self.barrelrotationspeed*(Barrel_gears/Motor_gears)
 
 #this is to update the formula for finding the length
 def leng_update():

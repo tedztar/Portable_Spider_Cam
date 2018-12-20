@@ -40,19 +40,18 @@ class motor:
      #calculates the rate that the wire is changing at any point
      def getwirespeed(self,xspeed,yspeed,zspeed):
          self.getlength() #required to make sure the callculations are current and accurate
-         self.wirespeed= ((self.equation[0]*xspeed) + (self.equation[1]*yspeed) + (self.equation[2]*zspeed))/self.length
-     
+         self.wirespeed= ((self.equation[0]*xspeed) + (self.equation[1]*yspeed) + (self.equation[2]*zspeed))/self.length 
     #calculates the number of rotations the motor needs to preform
      def motorrotation(self):
         self.getlength()
         self.rotationneeded=self.length/Barrel_circumfrence
 
-    #calculates the rate that the motor needs to be spinning at to give the required wire speed
+
+     #calculates the rate that the motor needs to be spinning at to give the required wire speed
      def motorspeed(self):
          self.getwirespeed()
          self.barrelrotationspeed=self.wirespeed/Barrel_circumfrence
          self.motorspeed=self.barrelrotationspeed*(Barrel_gears/Motor_gears)
-
 #this is to update the formula for finding the length
 def leng_update():
     motor1.equation = [(cam.x-cam.A), (cam.maxy-cam.y-cam.A),(cam.maxz-cam.z)]

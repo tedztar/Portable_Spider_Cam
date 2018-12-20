@@ -1,0 +1,1 @@
+#this is the main script that contols everything

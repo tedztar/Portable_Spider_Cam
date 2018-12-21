@@ -1,5 +1,4 @@
-#This is the code that reads the config
-#Import external libraries.
+# Import external libraries.
 from configparser import ConfigParser
 
 # Does the file exist? If we can read it then it does exist.
@@ -8,67 +7,87 @@ def read_file():
    # Give reading the program a try.
    try:
       # File name, read.
-      open("file_name.ini", "r")
+      open("config.ini", "r")
+
+      
 
       # Create a catergory Reference List.
-      info = ["catergory1", "catergory2"]
+      info = ["General", "Motor"]
 
-      # Set the file catergories to the config functions.
-      config.read("file_name.ini")
+      # Set the file categories to the config functions.
+      config.read("config.ini")
 
-      # Split the catergories from the file.
-      for catergory in config.sections():
+      # Split the categories from the file.
+      for category in config.sections():
 
-         # Do all catergories exist in the file. 
-         if catergory in info:
-            info.remove(catergory)
+         # Do all categories exist in the file. 
+         if category in info:
+            info.remove(category)
 
-         # If the catergory doesn't exist, remove it.
+         # If the category doesn't exist, remove it.
          else:
-            config.remove_section(catergory)
+            config.remove_section(category)
 
-      # If there isn't a catergory, create the missing catergories.
-      for catergory in info:
-         config.add_section(catergory)
-
+      # If there isn't a category, create the missing categories.
+      for category in info:
+         config.add_section(category)
+      
       write_file()
 
     
 
       # Create a sub_catergory reference list.
       info = [
-         ["sub_catergory1", "sub_catergory2"],
-         ["sub_catergory1"],
+         ["Run_speed","Max_x","Max_y","Max_z","Camera_A"],
+         ["Drum_radious","Drum_gears","Motor_gears"]
          ]
 
       # With the list inside a list reference, it also needs an index.
       index = int(0)
 
-      # Loop each catergory to check if the sub_catergories exist.
-      for catergory in config.sections():
+      # Loop each category to check if the sub_categories exist.
+      for category in config.sections():
 
-            # This chooses the sub_catergories to check against.
+            # This chooses the sub_categories to check against.
             task = info[index]
 
-            # Loop each sub_catergory to check if the sub_catergories is equal.
-            for sub_catergory in config.options(catergory):
+            # Loop each sub_category to check if the sub_categories is equal.
+            for sub_category in config.options(category):
 
-               # Do all sub_catergories exist in the catergory.
-               if sub_catergory in task:
-                  task.remove(sub_catergory)
+               # Do all sub_categories exist in the category.
+               if sub_category in task:
+                  task.remove(sub_category)
 
-               # If the sub_catergory doesn't exist, remove it.
+               # If the sub_category doesn't exist, remove it.
                else:
-                  config.remove_option(catergory, sub_catergory)
+                  config.remove_option(category, sub_category)
 
-            # If the sub catergories don't exist then create them.
-            for sub_catergory in task:
-               config.set(catergory, sub_catergory, "value")
+            # If the sub categories don't exist then create them.
+            for sub_category in task:
+               config.set(category, sub_category, "")
 
             # Once it is done, add one to the index for the next list.
             index += 1
+            
+      write_file()
+
+            
+
+      # Check if the values are intergers.
+      for category in config.sections():
+         for sub_category in config.options(category):
+
+            # If the values are not intergers then it will send an error "ValueError".
+            try:
+               int(config.get(category, sub_category))
+               pass
+
+            # Send feedback if a value needs to be changed.
+            except ValueError:
+                   print("{} in {} needs to be configured.".format(sub_category, category))
 
       write_file()
+         
 
 
 
@@ -81,16 +100,20 @@ def read_file():
 # This file does not exist. Create the factory default file.
 def create_file():
 
-   # Create the catergory and set the sub_catergories.
-   config["catergory1"] = {
-      "sub_catergory1" : "value",
-      "sub_catergory2" : "value",
+   # Create the category and set the sub_catergories.
+   config["general"] = {
+      "Run_speed" : "value", #put higher if computer is slow, movement will be less smooth. Put lower if computer is not laging, movement will be smother
+      "Max_x" : "value", #set as the width (in cm) of the "box" that the camera can fly in
+      "Max_y" : "value", #set as the length (in cm) of the "box" that the camera can fly in
+      "Max_z" : "value", #sed as the hight (in cm) of the "box" that the camera can fly in
+      "Camera_A" : "value", #set as half the width (in cm) of the mount connected to the wires
       }
 
-   config["catergory2"] = {
-      "sub_catergory1" : "value",
+   config["motor"] = {
+      "Drum_radious" : "value", #set as the radious (in cm) of the drum for the winch stations
+      "Drum_gears" : "value", #set as the number of gears that the drum of the winch has (set to 1 if direct drive)
+      "Motor_gears" : "value" ##set as the number of gears that the motor of the winch has (set to 1 if direct drive)
       }
-
    write_file()
    read_file()
 
@@ -100,10 +123,10 @@ def create_file():
 def write_file():
 
    # Create a file to set the catergories and sub_catergories in.
-   with open("file_name.ini", "w") as file_name:
+   with open("config.ini", "w") as file_name:
       # Write the factory default file.
       config.write(file_name)
-      
+
 
 
 # If this program is the main module. Run this code.

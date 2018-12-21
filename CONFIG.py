@@ -31,6 +31,8 @@ def read_file():
       # If there isn't a category, create the missing categories.
       for category in info:
          config.add_section(category)
+      
+      write_file()
 
     
 
@@ -66,6 +68,8 @@ def read_file():
 
             # Once it is done, add one to the index for the next list.
             index += 1
+            
+       write_file()
 
             
 

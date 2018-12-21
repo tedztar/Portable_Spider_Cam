@@ -11,8 +11,8 @@ def read_file():
 
       
 
-      # Create a catergory Reference List.
-      info = ["General", "Motor"]
+      # Create a category Reference List.
+      info = ["general", "motor"]
 
       # Set the file categories to the config functions.
       config.read("config.ini")
@@ -36,10 +36,10 @@ def read_file():
 
     
 
-      # Create a sub_catergory reference list.
+      # Create a sub_category reference list.
       info = [
-         ["Run_speed","Max_x","Max_y","Max_z","Camera_A"],
-         ["Drum_radious","Drum_gears","Motor_gears"]
+         ["run_speed","max_x","max_y","max_z","camera_a"],
+         ["drum_radious","drum_gears","motor_gears"],
          ]
 
       # With the list inside a list reference, it also needs an index.
@@ -102,17 +102,17 @@ def create_file():
 
    # Create the category and set the sub_catergories.
    config["general"] = {
-      "Run_speed" : "value", #put higher if computer is slow, movement will be less smooth. Put lower if computer is not laging, movement will be smother
-      "Max_x" : "value", #set as the width (in cm) of the "box" that the camera can fly in
-      "Max_y" : "value", #set as the length (in cm) of the "box" that the camera can fly in
-      "Max_z" : "value", #sed as the hight (in cm) of the "box" that the camera can fly in
-      "Camera_A" : "value", #set as half the width (in cm) of the mount connected to the wires
+      "run_speed" : "value", #put higher if computer is slow, movement will be less smooth. Put lower if computer is not laging, movement will be smother
+      "max_x" : "value", #set as the width (in cm) of the "box" that the camera can fly in
+      "max_y" : "value", #set as the length (in cm) of the "box" that the camera can fly in
+      "max_z" : "value", #sed as the hight (in cm) of the "box" that the camera can fly in
+      "camera_a" : "value", #set as half the width (in cm) of the mount connected to the wires
       }
 
    config["motor"] = {
-      "Drum_radious" : "value", #set as the radious (in cm) of the drum for the winch stations
-      "Drum_gears" : "value", #set as the number of gears that the drum of the winch has (set to 1 if direct drive)
-      "Motor_gears" : "value" ##set as the number of gears that the motor of the winch has (set to 1 if direct drive)
+      "drum_radious" : "value", #set as the radious (in cm) of the drum for the winch stations
+      "drum_gears" : "value", #set as the number of gears that the drum of the winch has (set to 1 if direct drive)
+      "motor_gears" : "value", ##set as the number of gears that the motor of the winch has (set to 1 if direct drive)
       }
    write_file()
    read_file()

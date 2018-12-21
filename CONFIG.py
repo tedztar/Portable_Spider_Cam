@@ -12,7 +12,7 @@ def read_file():
       
 
       # Create a category Reference List.
-      info = ["category1", "category2"]
+      info = ["Category1", "Category2"]
 
       # Set the file categories to the config functions.
       config.read("file_name.ini")
@@ -88,11 +88,10 @@ def read_file():
 
             # Send feedback if a value needs to be changed.
             except ValueError:
-                   print("{} in {} needs to be configured.".format(sub_category, category))
+                   print("{} in {} needs to be configured.".format(str(sub_category).capitalize(), category))
 
       write_file()
          
-
 
 
    # If it cannot find the file it will return an Error "FileNotFound".
@@ -105,12 +104,12 @@ def read_file():
 def create_file():
 
    # Create the category and set the sub_catergories.
-   config["category1"] = {
+   config["Category1"] = {
       "sub_category1" : "0",
       "sub_category2" : "0",
       }
 
-   config["category2"] = {
+   config["Category2"] = {
       "sub_category1" : "0",
       }
 

@@ -93,6 +93,7 @@ def create_file():
       }
 
    write_file()
+   read_file()
 
 
 

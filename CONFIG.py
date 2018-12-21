@@ -42,6 +42,7 @@ def read_file():
          ["sub_category1"],
          ]
 
+
       # With the list inside a list reference, it also needs an index.
       index = int(0)
 
@@ -51,19 +52,22 @@ def read_file():
             # This chooses the sub_categories to check against.
             task = info[index]
 
+            # This is to help prevent errors as subcategories lowercase automatically.
+            work = [ sub_category.lower() for sub_category in task] 
+
             # Loop each sub_category to check if the sub_categories is equal.
             for sub_category in config.options(category):
 
                # Do all sub_categories exist in the category.
-               if sub_category in task:
-                  task.remove(sub_category)
+               if sub_category in work:
+                  work.remove(sub_category)
 
                # If the sub_category doesn't exist, remove it.
                else:
                   config.remove_option(category, sub_category)
 
             # If the sub categories don't exist then create them.
-            for sub_category in task:
+            for sub_category in work:
                config.set(category, sub_category, "")
 
             # Once it is done, add one to the index for the next list.
@@ -133,3 +137,4 @@ if __name__ == "__main__":
 
    # 1.Step one, check if the config files exist.
    read_file()
+

@@ -112,7 +112,7 @@ def create_file():
    config["motor"] = {
       "drum_radious" : "value", #set as the radious (in cm) of the drum for the winch stations
       "drum_gears" : "value", #set as the number of gears that the drum of the winch has (set to 1 if direct drive)
-      "motor_gears" : "value", ##set as the number of gears that the motor of the winch has (set to 1 if direct drive)
+      "motor_gears" : "value", #set as the number of gears that the motor of the winch has (set to 1 if direct drive)
       }
    write_file()
    read_file()

@@ -7,15 +7,15 @@ def read_file():
    # Give reading the program a try.
    try:
       # File name, read.
-      open("file_name.ini", "r")
+      open("config.ini", "r")
 
       
 
       # Create a category Reference List.
-      info = ["Category1", "Category2"]
+      info = ["general", "motor"]
 
       # Set the file categories to the config functions.
-      config.read("file_name.ini")
+      config.read("config.ini")
 
       # Split the categories from the file.
       for category in config.sections():
@@ -38,8 +38,8 @@ def read_file():
 
       # Create a sub_category reference list.
       info = [
-         ["sub_category1", "sub_category2"],
-         ["sub_category1"],
+         ["run_speed","max_x","max_y","max_z","camera_a"],
+         ["drum_radious","drum_gears","motor_gears"],
          ]
 
 
@@ -104,13 +104,18 @@ def read_file():
 def create_file():
 
    # Create the category and set the sub_catergories.
-   config["Category1"] = {
-      "sub_category1" : "0",
-      "sub_category2" : "0",
+   config["general"] = {
+      "run_speed" : "value", #put higher if computer is slow, movement will be less smooth. Put lower if computer is not laging, movement will be smother
+      "max_x" : "value", #set as the width (in cm) of the "box" that the camera can fly in
+      "max_y" : "value", #set as the length (in cm) of the "box" that the camera can fly in
+      "max_z" : "value", #sed as the hight (in cm) of the "box" that the camera can fly in
+      "camera_a" : "value", #set as half the width (in cm) of the mount connected to the wires
       }
 
-   config["Category2"] = {
-      "sub_category1" : "0",
+   config["motor"] = {
+      "drum_radious" : "value", #set as the radious (in cm) of the drum for the winch stations
+      "drum_gears" : "value", #set as the number of gears that the drum of the winch has (set to 1 if direct drive)
+      "motor_gears" : "value", #set as the number of gears that the motor of the winch has (set to 1 if direct drive)
       }
 
    write_file()
@@ -122,7 +127,7 @@ def create_file():
 def write_file():
 
    # Create a file to set the catergories and sub_catergories in.
-   with open("file_name.ini", "w") as file_name:
+   with open("config.ini", "w") as file_name:
       # Write the factory default file.
       config.write(file_name)
 

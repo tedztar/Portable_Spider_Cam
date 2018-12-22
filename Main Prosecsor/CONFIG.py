@@ -31,7 +31,7 @@ def read_file():
       # If there isn't a category, create the missing categories.
       for category in info:
          config.add_section(category)
-      
+
       write_file()
 
     
@@ -42,6 +42,7 @@ def read_file():
          ["drum_radious","drum_gears","motor_gears"],
          ]
 
+
       # With the list inside a list reference, it also needs an index.
       index = int(0)
 
@@ -51,24 +52,27 @@ def read_file():
             # This chooses the sub_categories to check against.
             task = info[index]
 
+            # This is to help prevent errors as subcategories lowercase automatically.
+            work = [ sub_category.lower() for sub_category in task] 
+
             # Loop each sub_category to check if the sub_categories is equal.
             for sub_category in config.options(category):
 
                # Do all sub_categories exist in the category.
-               if sub_category in task:
-                  task.remove(sub_category)
+               if sub_category in work:
+                  work.remove(sub_category)
 
                # If the sub_category doesn't exist, remove it.
                else:
                   config.remove_option(category, sub_category)
 
             # If the sub categories don't exist then create them.
-            for sub_category in task:
+            for sub_category in work:
                config.set(category, sub_category, "")
 
             # Once it is done, add one to the index for the next list.
             index += 1
-            
+
       write_file()
 
             
@@ -84,11 +88,10 @@ def read_file():
 
             # Send feedback if a value needs to be changed.
             except ValueError:
-                   print("{} in {} needs to be configured.".format(sub_category, category))
+                   print("{} in {} needs to be configured.".format(str(sub_category).capitalize(), category))
 
       write_file()
          
-
 
 
    # If it cannot find the file it will return an Error "FileNotFound".
@@ -114,6 +117,7 @@ def create_file():
       "drum_gears" : "value", #set as the number of gears that the drum of the winch has (set to 1 if direct drive)
       "motor_gears" : "value", #set as the number of gears that the motor of the winch has (set to 1 if direct drive)
       }
+
    write_file()
    read_file()
 

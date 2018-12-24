@@ -214,13 +214,13 @@ class StartPage(Frame):
                   height = int(screen_height/200))
       result.grid(row = 3, column = 8, sticky="nsew")
 
-      #Changes the speed on the display and then updates it every 1000 milliseconds or every 1 second.
+      #Changes the speed on the display and then updates it every 1 milliseconds or every 0.001 second.
       def update():
          result.config(text = "Current Speed:\n %d m/s" % ((SpeedScale.get())))
          self.update()
-         self.after(1000, update)
+         self.after(1, update)
 
-      self.after(1000, update)
+      self.after(1, update)
 
 # Second Page.
 class SecondPage(Frame):

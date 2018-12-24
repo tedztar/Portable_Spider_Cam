@@ -201,16 +201,26 @@ class StartPage(Frame):
                    height = int(screen_height/200))
       Down.grid(row = 5, column = 7, sticky="nsew")
 
+      SpeedScale = Scale(self,
+                         orient=HORIZONTAL,
+                         from_=0,
+                         to=100)
+      SpeedScale.grid(row = 4, column = 8, sticky="nsew")
+
       result = Label(self,
-                  text = "Current Speed:\n %dm/s" % (0),
+                  text = "Current Speed:\n %d m/s" % ((SpeedScale.get())),
                   font = (font_type),
                   width = int(screen_width/80),
                   height = int(screen_height/200))
       result.grid(row = 3, column = 8, sticky="nsew")
 
-      SpeedScale = Scale(self,
-                         orient=HORIZONTAL)
-      SpeedScale.grid(row = 4, column = 8, sticky="nsew")
+      #Changes the speed on the display and then updates it every 1000 milliseconds or every 1 second.
+      def update():
+         result.config(text = "Current Speed:\n %d m/s" % ((SpeedScale.get())))
+         self.update()
+         self.after(1000, update)
+
+      self.after(1000, update)
 
 # Second Page.
 class SecondPage(Frame):

@@ -77,17 +77,17 @@ def read_file():
 
             
 
-      # Check if the values are intergers.
+      # Check if the values are integers.
       for category in config.sections():
          for sub_category in config.options(category):
 
             result = True
 
-            # If the values are not intergers then it will send an error "ValueError".
+            # If the values are not integers then it will send an error "ValueError".
             try:
                check_value = int(config.get(category, sub_category))
 
-               # If the value is a positive interger or 0 then allow it to pass.
+               # If the value is a positive integer or 0 then allow it to pass.
                if check_value >= 0:
                   pass
 

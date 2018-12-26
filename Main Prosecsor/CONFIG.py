@@ -11,8 +11,8 @@ def read_file():
 
       
 
-      # Create a category Reference List.
-      info = ["general", "motor"]
+      # Create a category reference list based off the default list.
+      info = reference.sections()
 
       # Set the file categories to the config functions.
       config.read("config.ini")
@@ -31,19 +31,23 @@ def read_file():
       # If there isn't a category, create the missing categories.
       for category in info:
          config.add_section(category)
-
+      
       write_file()
 
     
 
       # Create a sub_category reference list.
-      info = [
-         ["run_speed","max_x","max_y","max_z","camera_a"],
-         ["drum_radious","drum_gears","motor_gears"],
-         ]
+      info = []
 
+      # Take each category and turn all the sub categories into one list.
+      for category in reference.sections():
+         
+         sub_category = reference.options(str(category))
+         
+         # Add the sub category list into the main list. 
+         info.append(sub_category)
 
-      # With the list inside a list reference, it also needs an index.
+       # With the list inside a list reference, it also needs an index.
       index = int(0)
 
       # Loop each category to check if the sub_categories exist.
@@ -109,17 +113,21 @@ def read_file():
          
 
 
+
    # If it cannot find the file it will return an Error "FileNotFound".
    except FileNotFoundError:
-      create_file()
+      create_file(config)
+
+      write_file()
+      read_file()
 
 
 
 # This file does not exist. Create the factory default file.
-def create_file():
+def create_file(file):
 
    # Create the category and set the sub_catergories.
-   config["General"] = {
+   file["General"] = {
       "run_speed" : "value", #put higher if computer is slow, movement will be less smooth. Put lower if computer is not laging, movement will be smother
       "max_x" : "value", #set as the width (in cm) of the "box" that the camera can fly in
       "max_y" : "value", #set as the length (in cm) of the "box" that the camera can fly in
@@ -128,14 +136,11 @@ def create_file():
       "max_movement_speed" : "value", # set as the speed (in cm/s) of the camera.
       }
 
-   config["Motor"] = {
+   file["Motor"] = {
       "drum_radious" : "value", #set as the radious (in cm) of the drum for the winch stations
       "drum_gears" : "value", #set as the number of gears that the drum of the winch has (set to 1 if direct drive)
       "motor_gears" : "value", ##set as the number of gears that the motor of the winch has (set to 1 if direct drive)
       }
-   write_file()
-   read_file()
-
 
 
 
@@ -154,6 +159,11 @@ if __name__ == "__main__":
 
    #This allows you to create class/object orientated storage files.
    config = ConfigParser(allow_no_value=True)
+   reference = ConfigParser(allow_no_value=True)
 
+   #This creates a reference list which we will use to check for any updates in changes.
+   create_file(reference)
+   
    # 1.Step one, check if the config files exist.
    read_file()
+

@@ -81,14 +81,29 @@ def read_file():
       for category in config.sections():
          for sub_category in config.options(category):
 
+            result = True
+
             # If the values are not intergers then it will send an error "ValueError".
             try:
-               int(config.get(category, sub_category))
-               pass
+               check_value = int(config.get(category, sub_category))
+
+               # If the value is a positive interger or 0 then allow it to pass.
+               if check_value >= 0:
+                  pass
+
+               # If the value does not get accepted as greater or equal to 0, then set result as False.
+               else:
+                  result = False
 
             # Send feedback if a value needs to be changed.
             except ValueError:
-                   print("{} in {} needs to be configured.".format(str(sub_category).capitalize(), category))
+               result = False
+
+            # If the value does not meet the requirements, inform the user to configure the config file.
+            if not result:
+
+               # The exact line that needs to be configured.
+               print("{} in {} needs to be configured.".format(str(sub_category).capitalize(), category))
 
       write_file()
          
@@ -104,22 +119,23 @@ def read_file():
 def create_file():
 
    # Create the category and set the sub_catergories.
-   config["general"] = {
+   config["General"] = {
       "run_speed" : "value", #put higher if computer is slow, movement will be less smooth. Put lower if computer is not laging, movement will be smother
       "max_x" : "value", #set as the width (in cm) of the "box" that the camera can fly in
       "max_y" : "value", #set as the length (in cm) of the "box" that the camera can fly in
-      "max_z" : "value", #sed as the hight (in cm) of the "box" that the camera can fly in
+      "max_z" : "value", #set as the hight (in cm) of the "box" that the camera can fly in
       "camera_a" : "value", #set as half the width (in cm) of the mount connected to the wires
+      "max_movement_speed" : "value", # set as the speed (in cm/s) of the camera.
       }
 
-   config["motor"] = {
+   config["Motor"] = {
       "drum_radious" : "value", #set as the radious (in cm) of the drum for the winch stations
       "drum_gears" : "value", #set as the number of gears that the drum of the winch has (set to 1 if direct drive)
-      "motor_gears" : "value", #set as the number of gears that the motor of the winch has (set to 1 if direct drive)
+      "motor_gears" : "value", ##set as the number of gears that the motor of the winch has (set to 1 if direct drive)
       }
-
    write_file()
    read_file()
+
 
 
 

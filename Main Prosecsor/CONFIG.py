@@ -1,5 +1,17 @@
 # Import external libraries.
 from configparser import ConfigParser
+#creates the config variables
+#general config
+runspeed = int()
+max_x = int()
+max_y = int()
+max_z = int()
+camera_a = int()
+
+#motor config
+drum_radious = int()
+drum_gears = int()
+motor_gears = int()
 
 # Does the file exist? If we can read it then it does exist.
 def read_file():
@@ -142,7 +154,20 @@ def create_file(file):
       "motor_gears" : "value", ##set as the number of gears that the motor of the winch has (set to 1 if direct drive)
       }
 
+def update_config():
+    read_file()
+        
+    #general config
+    runspeed = config.get("General", "run_speed")
+    max_x = config.get("General", "max_x")
+    max_y = config.get("General", "max_y")
+    max_z = config.get("General", "max_z")
+    camera_a = config.get("General", "camera_a")
 
+    #motor config
+    drum_radious = config.get("Motor", "drum_radious")
+    drum_gears = config.get("Motor", "drum_gears")
+    motor_gears = config.get("Motor", "motor_gears")
 
 # Write information to the config file.
 def write_file():
@@ -151,7 +176,7 @@ def write_file():
    with open("config.ini", "w") as file_name:
       # Write the factory default file.
       config.write(file_name)
-
+        
 
 #runs if this program is called by aother file. Run this code.
 if __name__ == "CONFIG":
@@ -164,7 +189,7 @@ if __name__ == "CONFIG":
    create_file(reference)
    
    # 1.Step one, check if the config files exist.
-   read_file()
+ 
 
 # If this program is the main module. Run this code. USE ONLY FOR TESTING
 if __name__ == "__main__":

@@ -1,7 +1,8 @@
 #The general Math is in this file
-import MAIN
 #importing used libraries
 import math
+import CONFIG
+
 
 class motor:
     #inisiates all variables relating to a spisific motor
@@ -14,10 +15,10 @@ class motor:
           self.motorspeed = int()
 
 def leng_update(x,y,z):
-    motor1.equation = [(x-const.camera_a), (const.max_y-y-const.camera_a),(const.max_z-z)]
-    motor2.equation = [(const.max_x-x-const.camera_a), (const.max_y-y-const.camera_a),(const.max_z-z)]
-    motor3.equation = [(x-const.camera_a), (y-const.camera_a),(const.max_z-z)]
-    motor4.equation = [(const.max_x-x-const.camera_a), (y-const.camera_a),(const.max_z-z)]
+    motor1.equation = [(x-CONFIG.camera_a), (CONFIG.max_y-y-CONFIG.camera_a),(CONFIG.max_z-z)]
+    motor2.equation = [(CONFIG.max_x-x-CONFIG.camera_a), (CONFIG.max_y-y-CONFIG.camera_a),(CONFIG.max_z-z)]
+    motor3.equation = [(x-CONFIG.camera_a), (y-CONFIG.camera_a),(CONFIG.max_z-z)]
+    motor4.equation = [(CONFIG.max_x-x-CONFIG.camera_a), (y-CONFIG.camera_a),(CONFIG.max_z-z)]
 
 def getlength(motornum,x,y,z): #Motor you want (i.e motor1), x, y, z
     leng_update(x,y,z)
@@ -35,9 +36,8 @@ def motorrotation():
 def motorspeed():
     print()
 
-#runs if this program is called by another file
-if __name__ == "__MATH__":
-    motor1=motor() 
-    motor2=motor()
-    motor3=motor()
-    motor4=motor()
+#Set up stuff
+motor1=motor() 
+motor2=motor()
+motor3=motor()
+motor4=motor()

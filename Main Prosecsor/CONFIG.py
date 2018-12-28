@@ -7,6 +7,7 @@ max_x = int()
 max_y = int()
 max_z = int()
 camera_a = int()
+max_movement_speed = int(10)
 
 #motor config
 drum_radious = int()
@@ -163,6 +164,7 @@ def update_config():
     max_y = config.get("General", "max_y")
     max_z = config.get("General", "max_z")
     camera_a = config.get("General", "camera_a")
+    max_movement_speed = config.get("General","max_movement_speed")
 
     #motor config
     drum_radious = config.get("Motor", "drum_radious")

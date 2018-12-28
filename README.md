@@ -4,8 +4,9 @@ I am working on making a portable spider cam that can be scalable. Because of th
 Parts list:
 1x raspberry pi (this is the main brain)
 4x audrino (have not decide on what verstion)
-4x steper motors (with H bridge for driving)
-5x LoRa moduals (wierless communication)
+4x steper motors
+4x H brige for driving stepper motors
+5x LoRa moduals (wierless communication [RFM96 RFM96W LoRa]) (probably using https://github.com/mayeranalytics/pySX127x and https://github.com/sandeepmistry/arduino-LoRa but undecided)
 
 power delivery for all moduals (can be mains powered but will desing some batery monorting in.)
 

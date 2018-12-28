@@ -1,11 +1,5 @@
 #The general Math is in this file
-
-#Constants set up in the config file
-camA = 0
-cammaxx = 10
-cammaxy = 10
-cammaxz = 10
-
+import MAIN
 #importing used libraries
 import math
 
@@ -20,10 +14,10 @@ class motor:
           self.motorspeed = int()
 
 def leng_update(x,y,z):
-    motor1.equation = [(x-camA), (cammaxy-y-camA),(cammaxz-z)]
-    motor2.equation = [(cammaxx-x-camA), (cammaxy-y-camA),(cammaxz-z)]
-    motor3.equation = [(x-camA), (y-camA),(cammaxz-z)]
-    motor4.equation = [(cammaxx-x-camA), (y-camA),(cammaxz-z)]
+    motor1.equation = [(x-const.camera_a), (const.max_y-y-const.camera_a),(const.max_z-z)]
+    motor2.equation = [(const.max_x-x-const.camera_a), (const.max_y-y-const.camera_a),(const.max_z-z)]
+    motor3.equation = [(x-const.camera_a), (y-const.camera_a),(const.max_z-z)]
+    motor4.equation = [(const.max_x-x-const.camera_a), (y-const.camera_a),(const.max_z-z)]
 
 def getlength(motornum,x,y,z): #Motor you want (i.e motor1), x, y, z
     leng_update(x,y,z)
@@ -32,7 +26,7 @@ def getlength(motornum,x,y,z): #Motor you want (i.e motor1), x, y, z
 
 def getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed):
     leng_update(x,y,z) #required to make sure the callculations are current and accurate
-    wirespeed= ((motornum.equation[0]*xspeed) + (motornum.equation[1]*yspeed) + (motornum.equation[2]*zspeed))/motornum.getlength(motornum,x,y,z)
+    wirespeed= ((motornum.equation[0]*xspeed) + (motornum.equation[1]*yspeed) + (motornum.equation[2]*zspeed))/getlength(motornum,x,y,z)
     return(wirespeed)
 
 def motorrotation():
@@ -41,14 +35,9 @@ def motorrotation():
 def motorspeed():
     print()
 
-#Inisiation objects
-motor1=motor() 
-motor2=motor()
-motor3=motor()
-motor4=motor()
-
-print(getlength(motor1, 5, 5, 5))
-print(getlength(motor2, 5, 5, 5))
-print(getlength(motor3, 5, 5, 5))
-print(getlength(motor4, 5, 5, 5))
-
+#runs if this program is called by another file
+if __name__ == "__MATH__":
+    motor1=motor() 
+    motor2=motor()
+    motor3=motor()
+    motor4=motor()

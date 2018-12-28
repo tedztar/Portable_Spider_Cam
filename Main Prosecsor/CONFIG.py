@@ -132,8 +132,16 @@ def write_file():
       config.write(file_name)
 
 
+#runs if this program is called by aother file. Run this code.
+if __name__ == "CONFIG":
 
-# If this program is the main module. Run this code.
+   #This allows you to create class/object orientated storage files.
+   config = ConfigParser(allow_no_value=True)
+ 
+   # 1.Step one, check if the config files exist.
+   read_file()
+
+# If this program is the main module. Run this code. USE ONLY FOR TESTING
 if __name__ == "__main__":
 
    #This allows you to create class/object orientated storage files.

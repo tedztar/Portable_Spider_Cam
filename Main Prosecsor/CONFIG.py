@@ -85,7 +85,7 @@ def read_file():
 
             # If the sub categories don't exist then create them.
             for sub_category in work:
-               config.set(category, sub_category, "")
+               config.set(category, sub_category, reference.get(category, sub_category))
 
             # Once it is done, add one to the index for the next list.
             index += 1

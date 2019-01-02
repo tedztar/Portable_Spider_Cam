@@ -191,7 +191,7 @@ if __name__ == "CONFIG":
    create_file(reference)
    
    # 1.Step one, check if the config files exist.
- 
+   read_file()
 
 # If this program is the main module. Run this code. USE ONLY FOR TESTING
 if __name__ == "__main__":

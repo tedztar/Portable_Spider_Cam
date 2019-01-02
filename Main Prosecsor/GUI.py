@@ -399,6 +399,6 @@ class SecondPage(Frame):
 
 #Loops Program.
 if __name__ == "__main__":
-   CONFIG.update_config()
+   update_config()
    app = SampleApp()
    app.mainloop()

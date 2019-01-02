@@ -146,7 +146,7 @@ def create_file(file):
       "max_y" : "value", #set as the length (in cm) of the "box" that the camera can fly in
       "max_z" : "value", #set as the hight (in cm) of the "box" that the camera can fly in
       "camera_a" : "value", #set as half the width (in cm) of the mount connected to the wires
-      "max_movement_speed" : "10", # set as the speed (in cm/s) of the camera.
+      "max_movement_speed" : "value", # set as the speed (in cm/s) of the camera.
       }
 
    file["Motor"] = {

@@ -6,4 +6,7 @@ from MATH import *
 from MOVEMENT import *
 
 #setup code (stuff that is run during startup
+if __name__ == "__main__":
 
+   app = SampleApp()
+   app.mainloop()

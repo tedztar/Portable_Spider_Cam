@@ -1,6 +1,6 @@
 #this is the GUI that controlls the spidercam
 from tkinter import *
-import CONFIG
+from CONFIG import *
 
 # Creates a window as an Object.
 class SampleApp(Tk):
@@ -204,7 +204,7 @@ class StartPage(Frame):
       SpeedScale = Scale(self,
                          orient=HORIZONTAL,
                          from_=0,
-                         to=CONFIG.max_movement_speed)
+                         to=max_movement_speed)
       SpeedScale.grid(row = 4, column = 8, sticky="nsew")
 
       result = Label(self,
@@ -399,6 +399,5 @@ class SecondPage(Frame):
 
 #Loops Program.
 if __name__ == "__main__":
-   CONFIG.update_config()
    app = SampleApp()
    app.mainloop()

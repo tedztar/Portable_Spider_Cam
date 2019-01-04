@@ -157,11 +157,23 @@ def create_file(file):
 
 def update_config():
     read_file()
+    #general config
+    global runspeed
+    global max_x
+    global max_y
+    global max_z
+    global camera_a
+    global max_movement_speed
+
+    #motor config
+    global drum_radious
+    global drum_gears
+    global motor_gears
         
     #general config
     runspeed = config.get("General", "run_speed")
     max_x = config.get("General", "max_x")
-    max_y = config.get("General", "max_y")
+    ax_y = config.get("General", "max_y")
     max_z = config.get("General", "max_z")
     camera_a = config.get("General", "camera_a")
     max_movement_speed = config.get("General","max_movement_speed")
@@ -189,6 +201,8 @@ if __name__ == "CONFIG":
 
    #This creates a reference list which we will use to check for any updates in changes.
    create_file(reference)
+   
+   update_config()
    
    # 1.Step one, check if the config files exist.
  

@@ -1,3 +1,4 @@
+#Random Notes, We are sending the wire moduals the postition they need to go to (not relese this ammount), at what speed to go to.
 #The general Math is in this file
 #importing used libraries
 import math

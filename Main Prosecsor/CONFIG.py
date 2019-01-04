@@ -2,17 +2,17 @@
 from configparser import ConfigParser
 #creates the config variables
 #general config
-#runspeed = int()
-#max_x = int()
-#max_y = int()
-#max_z = int()
-#camera_a = int()
-#max_movement_speed = int(10)
+runspeed = int()
+max_x = int()
+max_y = int()
+max_z = int()
+camera_a = int()
+max_movement_speed = int(10)
 
 #motor config
-#drum_radious = int()
-#drum_gears = int()
-#motor_gears = int()
+drum_radious = int()
+drum_gears = int()
+motor_gears = int()
 
 # Does the file exist? If we can read it then it does exist.
 def read_file():
@@ -85,7 +85,7 @@ def read_file():
 
             # If the sub categories don't exist then create them.
             for sub_category in work:
-               config.set(category, sub_category, reference.get(category, sub_category))
+                config.set(category, sub_category, reference.get(category, sub_category))
 
             # Once it is done, add one to the index for the next list.
             index += 1
@@ -192,9 +192,6 @@ if __name__ == "CONFIG":
    
    # 1.Step one, check if the config files exist.
    read_file()
-   
-   # This is what gets called from GUI.
-   max_movement_speed = config.get("General","max_movement_speed")
 
 # If this program is the main module. Run this code. USE ONLY FOR TESTING
 if __name__ == "__main__":

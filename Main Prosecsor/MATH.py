@@ -30,8 +30,10 @@ def getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed):
     wirespeed= ((motornum.equation[0]*xspeed) + (motornum.equation[1]*yspeed) + (motornum.equation[2]*zspeed))/getlength(motornum,x,y,z)
     return(wirespeed)
 
-def motorrotation():
-    print()
+def motorangle(motornum,x,y,z):
+    length = getlength(motornum,x,y,z)
+    motorangle = length/CONFIG.radious
+    return(motorangle)
 
 def motorspeed():
     print()

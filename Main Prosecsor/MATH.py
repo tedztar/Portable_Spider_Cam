@@ -32,11 +32,15 @@ def getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed):
 
 def motorangle(motornum,x,y,z):
     length = getlength(motornum,x,y,z)
-    motorangle = length/CONFIG.radious
+    drumbangle = length/CONFIG.radious
+    motorangle = drumbangle*(CONFIG.motorgears/CONFIG.drumbgears)
     return(motorangle)
 
-def motorspeed():
-    print()
+def motorspeed(motornum,x,y,z,xspeed,yspeed,zspeed):
+    wirespeed=getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed)
+    drumbspeed=wirespeed/CONFIG.drumbradious()
+    motorspeed=drumbspeed*(CONFIG.motorgears/CONFIG.drumgears)
+    return(motorspeed)
 
 #Set up stuff
 motor1=motor() 

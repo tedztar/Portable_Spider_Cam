@@ -6,7 +6,7 @@ Parts list:
 4x audrino (have not decide on what verstion)
 4x steper motors
 4x H brige for driving stepper motors
-5x LoRa moduals (wierless communication [RFM96 RFM96W LoRa]) (probably using https://github.com/mayeranalytics/pySX127x and https://github.com/sandeepmistry/arduino-LoRa but undecided)
+5x HC-12 wierless serial
 
 power delivery for all moduals (can be mains powered but will desing some batery monorting in.)
 

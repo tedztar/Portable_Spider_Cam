@@ -1,66 +1,59 @@
-#this is the GUI that controlls the spidercam
+#This is the GUI that controlls the spidercam.
 from tkinter import *
-import CONFIG
 
-# Creates a window as an Object.
+#Creates a window as an object.
 class SampleApp(Tk):
 
-   # Sets up the window.
-   def __init__(self):
+   #Sets up the window.
+    def __init__(self, information):
       
-      Tk.__init__(self)  # SampleApp = Tk()
-      container = Frame(self) #  Window = Frame(SampleApp)
+        Tk.__init__(self)  #SampleApp = Tk()
+        container = Frame(self) #Window = Frame(SampleApp)
 
 
-      # Screen Adjustment.
-      screen_width = (self.winfo_screenwidth())
-      screen_height = (self.winfo_screenheight()/1.1)
+        #Screen Adjustment.
+        screen_width = (self.winfo_screenwidth())
+        screen_height = (self.winfo_screenheight()/1.1)
 
-      default_xposition = -10
-      default_yposition = 2
+        default_xposition = -10
+        default_yposition = 2
 
-      self.geometry("%dx%d+%d+%d" % (screen_width, screen_height, default_xposition, default_yposition))
+        self.geometry("%dx%d+%d+%d" % (screen_width, screen_height, default_xposition, default_yposition))
 
-      self.resizable(width=False, height=False)
-      self.title("...")
+        self.resizable(width=False, height=False)
+        self.title("...")
 
-      
 
-      container.pack(side ="top", fill="both", expand=True)
 
-      container.grid_rowconfigure(0, weight = 1)
-      container.grid_columnconfigure(0, weight = 1)
-
-      
-      # Empty list of useable frames.
-      self.frames = {}
-
-      # If you wish to add more frames, put the name in here, then create a new object.
-      for Frame_name in (StartPage, SecondPage):
-
-         frame = Frame_name(container, self)
-
-         self.frames[Frame_name] = frame
-
-         frame.grid(row=0, column=0, sticky="nsew")
-         
-
-      self.show_frame(StartPage)
-
-   # Show a certain Frame.
-   def show_frame(self, cont):
-      
-      frame = self.frames[cont]
-      frame.tkraise()
+        #This allows the information to be passed to the frames.
+        self.information = information
 
       
 
+        container.pack(side ="top", fill="both", expand=True)
+
+        container.grid_rowconfigure(0, weight = 1)
+        container.grid_columnconfigure(0, weight = 1)
+
+        self.container = container
+
+      
+        #Empty list of useable frames.
+        self.frames = {}
 
 
-# First Page. Self is the Frame itself. Parent is the container. Controller is the SampleApp.
+
+    #Show a certain Frame.
+    def show_frame(self, cont):
+      
+        frame = self.frames[cont]
+        frame.tkraise()
+
+
+#First Page. Self is the Frame itself. Parent is the container. Controller is the SampleApp.
 class StartPage(Frame):
 
-   def __init__(self, parent, controller):
+   def __init__(self, parent, controller, information):
       
       Frame.__init__(self, parent)
 
@@ -69,6 +62,18 @@ class StartPage(Frame):
 
       font = int(screen_height/30)
       font_type = ("Arial", font)
+
+
+
+      #Unpacks the information.
+      value_str = information[0]
+      value_int = information[1]
+
+      for value in range(len(value_str)):
+          if value_str[value] == "max_movement_speed":
+              max_movement_speed = value_int[value]
+
+
 
       Label(self,
             width = int(screen_width/180),
@@ -204,7 +209,7 @@ class StartPage(Frame):
       SpeedScale = Scale(self,
                          orient=HORIZONTAL,
                          from_=0,
-                         to=CONFIG.max_movement_speed)
+                         to=max_movement_speed)
       SpeedScale.grid(row = 4, column = 8, sticky="nsew")
 
       result = Label(self,
@@ -214,18 +219,23 @@ class StartPage(Frame):
                   height = int(screen_height/200))
       result.grid(row = 3, column = 8, sticky="nsew")
 
+
+
       #Changes the speed on the display and then updates it every 1 milliseconds or every 0.001 second.
       def update():
          result.config(text = "Current Speed:\n %d m/s" % ((SpeedScale.get())))
          self.update()
          self.after(1, update)
 
+      #Updates the frame.
       self.after(1, update)
 
-# Second Page.
+
+
+#Second Page.
 class SecondPage(Frame):
    
-   def __init__(self, parent, controller):
+   def __init__(self, parent, controller, information):
       
       Frame.__init__(self, parent)
 
@@ -397,8 +407,30 @@ class SecondPage(Frame):
                       height = int(screen_height/200))
       SpeedDecrease.grid(row = 5, column = 8, columnspan = 2, sticky="nsew")
 
-#Loops Program.
-if __name__ == "__main__":
-   CONFIG.update_config()
-   app = SampleApp()
-   app.mainloop()
+
+#Configure Page.
+class ConfigPage(Frame):
+   
+    def __init__(self, parent, controller, information):
+      
+        Frame.__init__(self, parent)
+
+        screen_width = (self.winfo_screenwidth())
+        screen_height = (self.winfo_screenheight()/1.1)
+
+        font = int(screen_height/30)
+        font_type = ("Arial", font)
+
+        value_int = information[1]
+
+        #Would Like to loop this too. Right now it doesn't do much.
+        #But we can use it to correct any values the user needs to change.
+        self.run_speed = value_int[0]
+        self.max_x = value_int[1]
+        self.max_y = value_int[2]
+        self.max_z = value_int[3]
+        self.camera_a = value_int[4]
+        self.max_movement_speed = value_int[5]
+        self.drum_radious = value_int[6]
+        self.drum_gears = value_int[7]
+        self.motor_gears = value_int[8]

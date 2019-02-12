@@ -6,7 +6,7 @@ from configparser import ConfigParser
 #Does the file exist? If we can read it then it does exist.
 def read_file():
 
-   #Give reading the programf a try.
+   #Give reading the program a try.
    try:
       #File name, read.
       open(file, "r")

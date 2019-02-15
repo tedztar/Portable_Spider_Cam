@@ -23,11 +23,6 @@ class SampleApp(Tk):
         self.resizable(width=False, height=False)
         self.title("...")
 
-
-
-        #This allows the information to be passed to the frames.
-        self.information = information
-
       
 
         container.pack(side ="top", fill="both", expand=True)
@@ -421,16 +416,5 @@ class ConfigPage(Frame):
         font = int(screen_height/30)
         font_type = ("Arial", font)
 
-        value_int = information[1]
-
-        #Would Like to loop this too. Right now it doesn't do much.
-        #But we can use it to correct any values the user needs to change.
-        self.run_speed = value_int[0]
-        self.max_x = value_int[1]
-        self.max_y = value_int[2]
-        self.max_z = value_int[3]
-        self.camera_a = value_int[4]
-        self.max_movement_speed = value_int[5]
-        self.drum_radious = value_int[6]
-        self.drum_gears = value_int[7]
-        self.motor_gears = value_int[8]
+        #Configurable Constants.
+        self.stuff = information

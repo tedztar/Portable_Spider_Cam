@@ -166,8 +166,7 @@ def import_file():
 
 
     #Information to return.
-    value_str = []
-    value_int = []
+    information = {}
 
 
 
@@ -175,25 +174,37 @@ def import_file():
     for category in config.sections():
         for sub_category in config.options(category):
 
-            value_str.append(sub_category)
-            value_int.append(config.get(category, sub_category))
+            value_str = (sub_category)
+            value_int = (config.get(category, sub_category))
+
+            information[value_str] = value_int
 
 
 
-    return (value_str, value_int, valid)
+    return (information, valid)
 
 
 
 #Writes to the file.
 def export_file(information):
 
-    index = 0
+   
+    #Opens the dictionary.
+    for (key, value) in information.items():
 
-    for category in config.sections():
-        for sub_category in config.options(category):
-            config.set(category, sub_category, str(information[index]))
-            index += 1
+        #Go through each constant.
+        for category in config.sections():
+            for sub_category in config.options(category):
 
+                #Checks if any constants are changed.
+                if information[key] == sub_category:
+                    config.set(category, sub_category, str(information[value]))
+
+                else:
+                    pass
+
+
+    #Updates the file with the new values.
     write_file()
     return()
 

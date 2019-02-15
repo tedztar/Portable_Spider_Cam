@@ -10,57 +10,63 @@ from MOVEMENT import *
 
 
 #This gathers the key pieces of information inside the program.
-information = import_file()
+(information, valid) = import_file()
 
 #Does the user need to update the values.
-valid = information[2]
 
 #This creates the GUI and sends the information to setup the GUI up.
 app = SampleApp(information)
 
 
+
 #If you wish to add more frames, put the name in here, then create a new object.
 #This also allows you to recover information from each frame.
 
-#Would like to loop this if there is any way you can create a list of just variable names not strings.
-start = StartPage(app.container, app, app.information)
-app.frames[StartPage] = start
-start.grid(row=0, column=0, sticky="nsew")
+#Sets up the frames.
+def setup_frame(frame_name):
 
-second = SecondPage(app.container, app, app.information)
-app.frames[SecondPage] = second
-second.grid(row=0, column=0, sticky="nsew")
+    frame = frame_name(app.container, app, information)
+    app.frames[frame_name] = frame
+    frame.grid(row=0, column=0, sticky="nsew")
 
-config = ConfigPage(app.container, app, app.information)
-app.frames[ConfigPage] = config
-config.grid(row=0, column=0, sticky="nsew")
+    return frame
+
+#These are the Frames.
+start = setup_frame(StartPage)
+second = setup_frame(SecondPage)
+config = setup_frame(ConfigPage)
+
+
+
 
 
 
 #We can have a setup screen if needed.
 if valid:
+    
     app.show_frame(StartPage)
 
 #The user can configurate the values.
 else:
+    
     app.show_frame(ConfigPage)
 
-    value_int = information[1]
-    
-    #I'll add something to check the values then pass them if they are correct.
-    #Plus if there is a way we can convert string to variables that would be great here to loop.
 
-    value_int[0] = config.run_speed
-    value_int[1] = config.max_x
-    value_int[2] = config.max_y
-    value_int[3] = config.max_z
-    value_int[4] = config.camera_a
-    value_int[5] = config.max_movement_speed
-    value_int[6] = config.drum_radious
-    value_int[7] = config.drum_gears
-    value_int[8] = config.motor_gears
+    
+    #It takes the dictionary. Key is the string reference. value is the product of the key.
+    for (key, value) in information.items():
+        
+        #Makes changes to the file.
+        if information[str(key)] != config.stuff[str(key)]:
+            information[key] = config.stuff[key]
+        
+        #If there is no changes then don't rewrite the value.
+        else:
+            pass
+
+
 
     #This writes to the file knowing the file exists.
-    export_file(value_int)
+    export_file(information)
 
 app.mainloop()

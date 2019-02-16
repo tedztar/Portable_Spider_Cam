@@ -418,3 +418,11 @@ class ConfigPage(Frame):
 
         #Configurable Constants.
         self.stuff = information
+         
+        Run = Button(self,
+                     text = " Default ",
+                     font = (font_type),
+                     width = int(screen_width/150),
+                     height = int(screen_height/300),
+                     command = lambda: controller.show_frame(StartPage))
+        Run.grid(row = 1, column = 2, columnspan = 2, sticky="nsew")

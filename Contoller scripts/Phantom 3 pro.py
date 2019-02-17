@@ -10,11 +10,13 @@ import struct
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("192.168.1.1", 2345))
 
-def word(b0, b1):
-    return (b0 << 8) | b1
+ratio = 2
 
-def conv(w):
-    return (w / 8 - 128) & 0xff
+def word(b0, b1):
+    global ratio
+    x = (b0 << 8) | b1
+    return int((x - 1024)/(ratio))
+
 
 while True:
     data = bytearray(s.recv(1024))
@@ -28,13 +30,33 @@ while True:
 #        print("leftX: %4i, leftY: %4i, rightX: %4i, rightY: %4i, cam: %4i" % (
 #           leftX, leftY, rightX, rightY, cam))
 #        print(buttons)
-        if button[1] == True:
-           print("button1")
-        if button[2] == True:
-           print("button2")
-        if button[3] == True:
-           print("button3")
-        if button[4] == True:
-           print("button4")
-        if button[5] == True:
-           print("button5")
+        if buttons[0] == True:
+           print("Video")
+        if buttons[1] == True:
+           print("Menu")
+        if buttons[2] == True:
+           print("Photo")
+        if buttons[3] == True:
+           print("C1")
+        if buttons[4] == True:
+           print("C2")
+        if rightX > 0:
+            print("rightx up")
+        if rightX < 0:
+            print("rightx down")
+        if rightY > 0:
+            print("righty up")
+        if rightY < 0:
+            print("righty down")
+        if leftX > 0:
+            print("leftx up")
+        if leftX < 0:
+            print("leftx down")
+        if leftY > 0:
+            print("lefty up")
+        if leftY < 0:
+            print("lefty down")
+        if cam > 0:
+            print("cam up")
+        if cam < 0:
+            print("cam down")

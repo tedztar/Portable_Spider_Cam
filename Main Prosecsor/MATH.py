@@ -5,41 +5,36 @@ import CONFIG
 
 
 class motor:
-    #inisiates all variables relating to a spisific motor
+    #quite literly just because I cant be bothered changing the rest of the code
      def __init__(self):
-          self.length = int()
           self.equation = []
-          self.wirespeed = int()
-          self.rotaionneeded = int()
-          self.barrelrotationspeed = int()
-          self.motorspeed = int()
 
-def leng_update(x,y,z):
-    motor1.equation = [(x-CONFIG.camera_a), (CONFIG.max_y-y-CONFIG.camera_a),(CONFIG.max_z-z)]
-    motor2.equation = [(CONFIG.max_x-x-CONFIG.camera_a), (CONFIG.max_y-y-CONFIG.camera_a),(CONFIG.max_z-z)]
-    motor3.equation = [(x-CONFIG.camera_a), (y-CONFIG.camera_a),(CONFIG.max_z-z)]
-    motor4.equation = [(CONFIG.max_x-x-CONFIG.camera_a), (y-CONFIG.camera_a),(CONFIG.max_z-z)]
+def leng_update(x,y,z):  #Updates the releive X,Y,Z for each motor
+    motor1.equation = [(x-CONFIG.information["camera_a"]), (CONFIG.information["max_y"]-y-CONFIG.infotmatio["camera_a"]),(CONFIG.information["max_z"]-z)]
+    motor2.equation = [(CONFIG.information["max_x"]-x-CONFIG.information["camera_a"]), (CONFIG.information["max_y"]-y-CONFIG.information["camera_a"]),(CONFIG.information["max_z-z"])]
+    motor3.equation = [(x-CONFIG.information["camera_a"]), (y-CONFIG.information["camera_a"]),(CONFIG.information["max_z"]-z)]
+    motor4.equation = [(CONFIG.information["max_x"]-x-CONFIG.information["camera_a"]), (y-CONFIG.information["camera_a"]),(CONFIG.information["max_z"]-z)]
 
-def getlength(motornum,x,y,z): #Motor you want (i.e motor1), x, y, z
+def getlength(motornum,x,y,z): #Motor you want (i.e motor1), x, y, z.  #gets the length of the wire
     leng_update(x,y,z)
     length = math.sqrt((motornum.equation[0]**2)+(motornum.equation[1]**2)+(motornum.equation[2]**2))
     return(length)
 
-def getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed):
+def getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed): #gets the rate of change of the length of a given wire
     leng_update(x,y,z) #required to make sure the callculations are current and accurate
     wirespeed= ((motornum.equation[0]*xspeed) + (motornum.equation[1]*yspeed) + (motornum.equation[2]*zspeed))/getlength(motornum,x,y,z)
     return(wirespeed)
 
-def motorangle(motornum,x,y,z):
+def motorangle(motornum,x,y,z): #calculates the angle that the motor needs to be in to be at a given position
     length = getlength(motornum,x,y,z)
-    drumbangle = length/CONFIG.radious
-    motorangle = drumbangle*(CONFIG.motorgears/CONFIG.drumbgears)
+    drumbangle = length/CONFIG.information["radious"]
+    motorangle = drumbangle*(CONFIG.information["motorgears"]/CONFIG.information["drumbgears"])
     return(motorangle)
 
-def motorspeed(motornum,x,y,z,xspeed,yspeed,zspeed):
+def motorspeed(motornum,x,y,z,xspeed,yspeed,zspeed): #calculates the speed that the motor needs to move at
     wirespeed=getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed)
-    drumbspeed=wirespeed/CONFIG.drumbradious()
-    motorspeed=drumbspeed*(CONFIG.motorgears/CONFIG.drumgears)
+    drumbspeed=wirespeed/CONFIG.information["drumbradious"]
+    motorspeed=drumbspeed*(CONFIG.information["motorgears"]/CONFIG.information["drumgears"])
     return(motorspeed)
 
 #Set up stuff

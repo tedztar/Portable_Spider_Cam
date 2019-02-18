@@ -1,8 +1,8 @@
 # Portable_Spider_Cam
-I am working on making a portable spider cam that can be scalable. Because of this I will be using LoRa modules for the communication between the main processor and the motors 
+I am working on making a portable spider cam that can be scalable. Because of this I will be using HC-12 wierless serial modules for the communication between the main processor and the motors 
 
-Parts list:
-1x raspberry pi (this is the main brain)
+Parts list: (this is what I am using but can be extreamly modified If you do modify please uplode your code for others)
+1x raspberry pi (this is the main brain) (an use anycomputer with a sutibe adapter)
 4x audrino (have not decide on what verstion)
 4x steper motors
 4x H brige for driving stepper motors

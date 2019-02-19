@@ -1,6 +1,6 @@
 #This is the GUI that controlls the spidercam.
 from tkinter import *
-
+import CONFIG
 #Creates a window as an object.
 class SampleApp(Tk):
 
@@ -58,16 +58,7 @@ class StartPage(Frame):
       font = int(screen_height/30)
       font_type = ("Arial", font)
 
-
-
-      #Unpacks the information.
-      value_str = information[0]
-      value_int = information[1]
-
-      for value in range(len(value_str)):
-          if value_str[value] == "max_movement_speed":
-              max_movement_speed = value_int[value]
-
+      max_movement_speed = information["max_movement_speed"]
 
 
       Label(self,

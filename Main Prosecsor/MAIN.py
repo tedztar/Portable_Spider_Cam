@@ -10,8 +10,8 @@ from MOVEMENT import *
 
 
 #This gathers the key pieces of information inside the program.
-(information, valid) = import_file()
-
+#(information, valid) = import_file()
+(valid) = import_file()
 #Does the user need to update the values.
 
 #This creates the GUI and sends the information to setup the GUI up.

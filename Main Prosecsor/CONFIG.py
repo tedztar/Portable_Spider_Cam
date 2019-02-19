@@ -1,6 +1,6 @@
 #Import external library.
 from configparser import ConfigParser
-
+information = {}
 
 
 #Does the file exist? If we can read it then it does exist.
@@ -159,14 +159,14 @@ def create_file(file):
 
 # This recovers and returns information.
 def import_file():
-
+    global information
     #Check if the config files exist and setup.
     valid = read_file()
 
 
 
     #Information to return.
-    information = {}
+    #information = {}
 
 
 
@@ -177,17 +177,19 @@ def import_file():
             value_str = (sub_category)
             value_int = (config.get(category, sub_category))
 
-            information[value_str] = value_int
+            information[value_str] = int(value_int)
 
 
 
-    return (information, valid)
+    #return (information, valid)
+    return (valid)
 
 
 
 #Writes to the file.
-def export_file(information):
-
+#def export_file(information):
+def export_file():
+    global information
    
     #Opens the dictionary.
     for (key, value) in information.items():

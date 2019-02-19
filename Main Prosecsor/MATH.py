@@ -10,8 +10,8 @@ class motor:
           self.equation = []
 
 def leng_update(x,y,z):  #Updates the releive X,Y,Z for each motor
-    motor1.equation = [(x-CONFIG.information["camera_a"]), (CONFIG.information["max_y"]-y-CONFIG.infotmatio["camera_a"]),(CONFIG.information["max_z"]-z)]
-    motor2.equation = [(CONFIG.information["max_x"]-x-CONFIG.information["camera_a"]), (CONFIG.information["max_y"]-y-CONFIG.information["camera_a"]),(CONFIG.information["max_z-z"])]
+    motor1.equation = [(x-CONFIG.information["camera_a"]), (CONFIG.information["max_y"]-y-CONFIG.information["camera_a"]),(CONFIG.information["max_z"]-z)]
+    motor2.equation = [(CONFIG.information["max_x"]-x-CONFIG.information["camera_a"]), (CONFIG.information["max_y"]-y-CONFIG.information["camera_a"]),(CONFIG.information["max_z"])]
     motor3.equation = [(x-CONFIG.information["camera_a"]), (y-CONFIG.information["camera_a"]),(CONFIG.information["max_z"]-z)]
     motor4.equation = [(CONFIG.information["max_x"]-x-CONFIG.information["camera_a"]), (y-CONFIG.information["camera_a"]),(CONFIG.information["max_z"]-z)]
 
@@ -42,3 +42,8 @@ motor1=motor()
 motor2=motor()
 motor3=motor()
 motor4=motor()
+
+#CONFIG.import_file()
+#test = getwirespeed(motor1, 10, 10, 10, 10, 10, 10)
+#print(test)
+#print("done")

@@ -6,15 +6,21 @@ class motor:
           self.wirespeed = int()
           self.motorangle = int()
           self.motorspeed = int()
-def move_up():
+def move_up(speed):
     print("move_up")
-def move_down():
+    print(speed)
+def move_down(speed):
     print("move_down")
-def move_left():
+    print(speed)
+def move_left(speed):
     print("move_left")
-def move_right():
+    print(speed)
+def move_right(speed):
     print("move_right")
-def move_foawd():
+    print(speed)
+def move_forward(speed):
     print("move_foawd")
-def move_back():
+    print(speed)
+def move_backward(speed):
     print("move_back")
+    print(speed)

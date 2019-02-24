@@ -1,6 +1,7 @@
 #this is the main script that contols everything
-from COMMUNICATION import *
 from CONFIG import *
+import_file()    #this order is important as then config is loaded for other files
+from COMMUNICATION import *
 from GUI import *
 from MATH import *
 from MOVEMENT import *

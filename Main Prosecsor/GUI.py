@@ -1,6 +1,8 @@
-#This is the GUI that controlls the spidercam.
+#This is the GUI that controlls the spidercam. #repetinterval
 from tkinter import *
 import CONFIG
+import MOVEMENT
+interval = int(1000 / int(CONFIG.information["run_speed"]))
 #Creates a window as an object.
 class SampleApp(Tk):
 
@@ -105,98 +107,116 @@ class StartPage(Frame):
                    text = " Pan ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   state = DISABLED)
       PanLeft.grid(row = 3, column = 2, sticky="nsew")
 
       PanRight = Button(self,
                    text = " -Pan ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   state = DISABLED)
       PanRight.grid(row = 3, column = 3, sticky="nsew")
 
       TiltLeft = Button(self,
                    text = " Tilt ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   state = DISABLED)
       TiltLeft.grid(row = 4, column = 2, sticky="nsew")
 
       TiltRight = Button(self,
                    text = " -Tilt ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   state = DISABLED)
       TiltRight.grid(row = 4, column = 3, sticky="nsew")
 
       YawLeft = Button(self,
                    text = " Yaw ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   state = DISABLED)
       YawLeft.grid(row = 5, column = 2, sticky="nsew")
 
       YawRight = Button(self,
                    text = " -Yaw ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   state = DISABLED)
       YawRight.grid(row = 5, column = 3, sticky="nsew")
+
+      SpeedScale = Scale(self,
+                         orient=HORIZONTAL,
+                         from_=0,
+                         to=max_movement_speed,
+                         resolution=1)
+      SpeedScale.grid(row = 4, column = 8, sticky="nsew")
 
       Forward = Button(self,
                    text = " Forward ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   repeatdelay=1,
+                   repeatinterval = interval,
+                   command = lambda: MOVEMENT.move_forward(SpeedScale.get()))
       Forward.grid(row = 3, column = 5, sticky="nsew")
 
       Backward = Button(self,
                    text = " Backward ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   repeatdelay=1,
+                   repeatinterval = interval,
+                   command = lambda: MOVEMENT.move_backward(SpeedScale.get()))
       Backward.grid(row = 5, column = 5, sticky="nsew")
 
       Left = Button(self,
                    text = " Left ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   repeatdelay=1,
+                   repeatinterval = interval,
+                   command = lambda: MOVEMENT.move_left(SpeedScale.get()))
       Left.grid(row = 4, column = 4, sticky="nsew")
 
       Right = Button(self,
                    text = " Right ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   repeatdelay=1,
+                   repeatinterval = interval,
+                   command = lambda: MOVEMENT.move_right(SpeedScale.get()))
       Right.grid(row = 4, column = 6, sticky="nsew")
 
       Up = Button(self,
                    text = " Up ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   repeatdelay=1,
+                   repeatinterval = interval,
+                   command = lambda: MOVEMENT.move_up(SpeedScale.get()))
       Up.grid(row = 3, column = 7, sticky="nsew")
 
       Down = Button(self,
                    text = " Down ",
                    font = (font_type),
                    width = int(screen_width/190),
-                   height = int(screen_height/200))
+                   height = int(screen_height/200),
+                   repeatdelay=1,
+                   repeatinterval = interval,
+                   command = lambda: MOVEMENT.move_down(SpeedScale.get()))
       Down.grid(row = 5, column = 7, sticky="nsew")
-
-      Down = Button(self,
-                   text = " Down ",
-                   font = (font_type),
-                   width = int(screen_width/190),
-                   height = int(screen_height/200))
-      Down.grid(row = 5, column = 7, sticky="nsew")
-
-      SpeedScale = Scale(self,
-                         orient=HORIZONTAL,
-                         from_=0,
-                         to=max_movement_speed)
-      SpeedScale.grid(row = 4, column = 8, sticky="nsew")
 
       result = Label(self,
                   text = "Current Speed:\n %d m/s" % ((SpeedScale.get())),

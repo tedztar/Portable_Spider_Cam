@@ -5,11 +5,11 @@ from COMMUNICATION import *
 from GUI import *
 from MATH import *
 from MOVEMENT import *
+import threading
 
 #setup code (stuff that is run during startup
-
-
-
+thread = threading.Thread(target = comstart, args = ( ))
+thread.start()
 #This gathers the key pieces of information inside the program.
 #(information, valid) = import_file()
 (valid) = import_file()

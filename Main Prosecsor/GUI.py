@@ -153,9 +153,9 @@ class StartPage(Frame):
 
       SpeedScale = Scale(self,
                          orient=HORIZONTAL,
-                         from_=0,
+                         from_=0.1,
                          to=max_movement_speed,
-                         resolution=1)
+                         resolution=0.1)
       SpeedScale.grid(row = 4, column = 8, sticky="nsew")
 
       Forward = Button(self,
@@ -219,7 +219,7 @@ class StartPage(Frame):
       Down.grid(row = 5, column = 7, sticky="nsew")
 
       result = Label(self,
-                  text = "Current Speed:\n %d m/s" % ((SpeedScale.get())),
+                  text = "Current Speed:\n %d cm/s" % ((SpeedScale.get())),
                   font = (font_type),
                   width = int(screen_width/80),
                   height = int(screen_height/200))

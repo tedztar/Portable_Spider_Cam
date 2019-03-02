@@ -2,7 +2,7 @@
 #importing used libraries
 import math
 import CONFIG
-
+setup = False
 
 class motor:
     #quite literly just because I cant be bothered changing the rest of the code

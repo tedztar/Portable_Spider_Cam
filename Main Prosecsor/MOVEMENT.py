@@ -13,6 +13,20 @@ class cam:
 
 camera=cam()
 
+
+def zero_reset():
+    COMMUNICATION.mode = "s"
+    COMMUNICATION.M1_Position = MATH.motorangle(MATH.motor1,(0),(0),(0))
+    COMMUNICATION.M1_Speed = MATH.motorspeed(MATH.motor1,(0),(0),(0),(1),(1),(1))
+    COMMUNICATION.M2_Position = MATH.motorangle(MATH.motor2,(0),(0),(0))
+    COMMUNICATION.M2_Speed = MATH.motorspeed(MATH.motor2,(0),(0),(0),(1),(1),(1))
+    COMMUNICATION.M3_Position = MATH.motorangle(MATH.motor3,(0),(0),(0))
+    COMMUNICATION.M3_Speed = MATH.motorspeed(MATH.motor3,(0),(0),(0),(1),(1),(1))
+    COMMUNICATION.M4_Position = MATH.motorangle(MATH.motor4,(0),(0),(0))
+    COMMUNICATION.M4_Speed = MATH.motorspeed(MATH.motor4,(0),(0),(0),(1),(1),(1))
+    COMMUNICATION.mode = "r" #thought just in case
+
+
 def move_up(speed):
     COMMUNICATION.mode = "r"
     step = CONFIG.information["run_speed"]/speed

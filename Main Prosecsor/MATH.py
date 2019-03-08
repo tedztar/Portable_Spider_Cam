@@ -27,14 +27,14 @@ def getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed): #gets the rate of change 
 
 def motorangle(motornum,x,y,z): #calculates the angle that the motor needs to be in to be at a given position
     length = getlength(motornum,x,y,z)
-    drumbangle = length/CONFIG.information["radious"]
-    motorangle = drumbangle*(CONFIG.information["motorgears"]/CONFIG.information["drumbgears"])
+    drumbangle = length/CONFIG.information["drum_radious"]
+    motorangle = drumbangle*(CONFIG.information["motor_gears"]/CONFIG.information["drum_gears"])
     return(motorangle)
 
 def motorspeed(motornum,x,y,z,xspeed,yspeed,zspeed): #calculates the speed that the motor needs to move at
     wirespeed=getwirespeed(motornum,x,y,z,xspeed,yspeed,zspeed)
-    drumbspeed=wirespeed/CONFIG.information["drumbradious"]
-    motorspeed=drumbspeed*(CONFIG.information["motorgears"]/CONFIG.information["drumgears"])
+    drumbspeed=wirespeed/CONFIG.information["drum_radious"]
+    motorspeed=drumbspeed*(CONFIG.information["motor_gears"]/CONFIG.information["drum_gears"])
     return(motorspeed)
 
 #Set up stuff

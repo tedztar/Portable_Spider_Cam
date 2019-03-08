@@ -387,10 +387,11 @@ class SecondPage(Frame):
       Blank1.grid(row = 7, column = 6, sticky="nsew")
 
       Blank2= Button(self,
+                   text = " Reset to 0 ",
                    font = (font_type),
                    width = int(screen_width/190),
                    height = int(screen_height/200))
-      Blank2.grid(row = 7, column = 7, sticky="nsew")
+      Blank2.grid(row = 5, column = 7, sticky="nsew")
 
       SpeedIncrease = Button(self,
                      font = (font_type),

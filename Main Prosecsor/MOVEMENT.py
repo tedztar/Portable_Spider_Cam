@@ -14,6 +14,7 @@ class cam:
 camera=cam()
 
 def move_up(speed):
+    COMMUNICATION.mode = "r"
     step = CONFIG.information["run_speed"]/speed
     COMMUNICATION.M1_Position = MATH.motorangle(MATH.motor1,(camera.x),(camera.y),(camera.z-step))
     COMMUNICATION.M1_Speed = MATH.motorspeed(MATH.motor1,(camera.x),(camera.y),(camera.z-step),(speed),(speed),(speed))
@@ -25,6 +26,7 @@ def move_up(speed):
     COMMUNICATION.M4_Speed = MATH.motorspeed(MATH.motor4,(camera.x),(camera.y),(camera.z-step),(speed),(speed),(speed))
     camera.z += step
 def move_down(speed):
+    COMMUNICATION.mode = "r"
     step = CONFIG.information["run_speed"]/speed
     COMMUNICATION.M1_Position = MATH.motorangle(MATH.motor1,(camera.x),(camera.y),(camera.z+step))
     COMMUNICATION.M1_Speed = MATH.motorspeed(MATH.motor1,(camera.x),(camera.y),(camera.z+step),(speed),(speed),(speed))
@@ -36,6 +38,7 @@ def move_down(speed):
     COMMUNICATION.M4_Speed = MATH.motorspeed(MATH.motor4,(camera.x),(camera.y),(camera.z+step),(speed),(speed),(speed))
     camera.z -= step
 def move_left(speed):
+    COMMUNICATION.mode = "r"
     step = CONFIG.information["run_speed"]/speed
     COMMUNICATION.M1_Position = MATH.motorangle(MATH.motor1,(camera.x + step),(camera.y),(camera.z))
     COMMUNICATION.M1_Speed = MATH.motorspeed(MATH.motor1,(camera.x + step),(camera.y),(camera.z),(speed),(speed),(speed))
@@ -47,6 +50,7 @@ def move_left(speed):
     COMMUNICATION.M4_Speed = MATH.motorspeed(MATH.motor4,(camera.x + step),(camera.y),(camera.z),(speed),(speed),(speed))
     camera.z += step
 def move_right(speed):
+    COMMUNICATION.mode = "r"
     step = CONFIG.information["run_speed"]/speed
     COMMUNICATION.M1_Position = MATH.motorangle(MATH.motor1,(camera.x - step),(camera.y),(camera.z))
     COMMUNICATION.M1_Speed = MATH.motorspeed(MATH.motor1,(camera.x - step),(camera.y),(camera.z),(speed),(speed),(speed))
@@ -58,6 +62,7 @@ def move_right(speed):
     COMMUNICATION.M4_Speed = MATH.motorspeed(MATH.motor4,(camera.x - step),(camera.y),(camera.z),(speed),(speed),(speed))
     camera.x -= step
 def move_forward(speed):
+    COMMUNICATION.mode = "r"
     step = CONFIG.information["run_speed"]/speed
     COMMUNICATION.M1_Position = MATH.motorangle(MATH.motor1,(camera.x),(camera.y - step),(camera.z))
     COMMUNICATION.M1_Speed = MATH.motorspeed(MATH.motor1,(camera.x),(camera.y - step),(camera.z),(speed),(speed),(speed))
@@ -69,6 +74,7 @@ def move_forward(speed):
     COMMUNICATION.M4_Speed = MATH.motorspeed(MATH.motor4,(camera.x),(camera.y - step),(camera.z),(speed),(speed),(speed))
     camera.y -= step
 def move_backward(speed):
+    COMMUNICATION.mode = "r"
     step = CONFIG.information["run_speed"]/speed
     COMMUNICATION.M1_Position = MATH.motorangle(MATH.motor1,(camera.x),(camera.y + step),(camera.z))
     COMMUNICATION.M1_Speed = MATH.motorspeed(MATH.motor1,(camera.x),(camera.y + step),(camera.z),(speed),(speed),(speed))

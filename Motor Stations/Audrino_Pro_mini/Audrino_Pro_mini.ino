@@ -30,11 +30,12 @@ void loop() {
   if (Serial.available() > 1){
     int inint = Serial.read();
     if (inint != "run command"){
+      inString = char(inint)
       char *ptr = strtok(inString, delim);
       flag = strtok(NULL, delim);
       if (flag == motor + "r" or flag == motor + "s"){
         myStepper.setSpeed(atoi(strtok(NULL, delim)));
-        go_to_pos = strtok(NULL, delim);
+        go_to_pos = atoi(strtok(NULL, delim));
         if (flag == motor + "r"){//code that is run when the module get the run signal
           num_of_steps = ((go_to_pos-current_pos)/step_angle);
          }

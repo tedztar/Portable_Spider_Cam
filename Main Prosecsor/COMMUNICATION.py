@@ -3,7 +3,7 @@ import CONFIG
 import serial
 import time
 
-#com = serial.Serial('/dev/ttyAMAo',   # '/dev/ttyAMAo' is for a raspberry pi, if using a windoes computer with a sutible converter use the com pror ie 'COM3'
+#com = serial.Serial('/dev/ttyAMAo',   # '/dev/ttyAMAo' is for a raspberry pi, if using a windoes computer with a sutible converter use the com port ie 'COM3'
 #                    baudrate=9600,
 #                    parity=serial.PARITY_NONE,
 #                    stopbits=serial.STOPBITS_ONE,

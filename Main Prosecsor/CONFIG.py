@@ -163,13 +163,6 @@ def import_file():
     #Check if the config files exist and setup.
     valid = read_file()
 
-
-
-    #Information to return.
-    #information = {}
-
-
-
     #Recovers the information from the file into the two Information lists.
     for category in config.sections():
         for sub_category in config.options(category):

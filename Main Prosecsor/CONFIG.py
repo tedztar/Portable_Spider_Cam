@@ -1,228 +1,141 @@
 #Import external library.
 from configparser import ConfigParser
-information = {}
 
+#This recovers and returns data from the file. Return (Object.)
+def ImportFile():
+    if FileDoesNotExist():
+        SetAsDefaultObject(temporaryData)
+        ExportDataToFile()
 
-#Does the file exist? If we can read it then it does exist.
-def read_file():
-
-   #Give reading the program a try.
-   try:
-      #File name, read.
-      open(file, "r")
-
-      #This creates a reference list which we will use to check for any updates in changes.
-      create_file(reference)
-
-      #Is the file ready for running.
-      valid = True
-
-
-
-      #Create a category reference list based off the default list.
-      info = reference.sections()
-
-      #Set the file categories to the config functions.
-      config.read(file)
-
-      #Split the categories from the file.
-      for category in config.sections():
-
-         #Do all categories exist in the file. 
-         if category in info:
-            info.remove(category)
-
-         #If the category doesn't exist, remove it.
-         else:
-            config.remove_section(category)
-
-      #If there isn't a category, create the missing categories.
-      for category in info:
-         config.add_section(category)
-      
-      write_file()
-
+    #Collect data from the file into temporary data. Then get it checked before using it.
+    temporaryData.read(fileName)     
+    CheckFileCategories()
     
+    return temporaryData.read(fileName) 
 
-      #Create a sub_category reference list.
-      info = []
+#Does the file exist? If we can read it then it does exist. Return (Boolean.)
+def FileDoesNotExist():
+    try:
+        OpenFileTo(read)
+        return False
 
-      #Take each category and turn all the sub categories into one list.
-      for category in reference.sections():
-         
-         sub_category = reference.options(str(category))
-         
-         #Add the sub category list into the main list. 
-         info.append(sub_category)
+    except FileNotFoundError:
+        return True
 
-      #With the list inside a list reference, it also needs an index.
-      index = int(0)
+#Access the file to write/read data.
+def OpenFileTo(option):
+    return open(fileName, str(option))
 
-      #Loop each category to check if the sub_categories exist.
-      for category in config.sections():
-
-            #This chooses the sub_categories to check against.
-            task = info[index]
-
-            #This is to help prevent errors as subcategories lowercase automatically.
-            work = [ sub_category.lower() for sub_category in task] 
-
-            #Loop each sub_category to check if the sub_categories is equal.
-            for sub_category in config.options(category):
-
-               #Do all sub_categories exist in the category.
-               if sub_category in work:
-                  work.remove(sub_category)
-
-               #If the sub_category doesn't exist, remove it.
-               else:
-                  config.remove_option(category, sub_category)
-
-            #If the sub categories don't exist then create them.
-            for sub_category in work:
-                config.set(category, sub_category, reference.get(category, sub_category))
-
-            #Once it is done, add one to the index for the next list.
-            index += 1
-
-      write_file()
-
-            
-
-      #Check if the values are integers.
-      for category in config.sections():
-         for sub_category in config.options(category):
-
-            result = True
-
-            #If the values are not integers then it will send an error "ValueError".
-            try:
-               check_value = int(config.get(category, sub_category))
-
-               #If the value is a positive integer or 0 then allow it to pass.
-               if check_value >= 0:
-                  pass
-
-               #If the value does not get accepted as greater or equal to 0, then set result as False.
-               else:
-                  result = False
-
-            #Send feedback if a value needs to be changed.
-            except ValueError:
-               result = False
-
-            #If the value does not meet the requirements, inform the user to configure the config file.
-            if not result:
-
-               #The exact line that needs to be configured.
-               print("{} in {} needs to be configured.".format(str(sub_category).capitalize(), category))
-               valid = False
-
-      write_file()  
-      return valid
-
-
-
-   #If it cannot find the file it will return an Error "FileNotFound".
-   except FileNotFoundError:
-      create_file(config)
-
-      write_file()
-      read_file()
-
-   return
-
-
-
-#This file does not exist. Create the factory default file.
-def create_file(file):
-
-   #Create the category and set the sub_catergories.
-   file["General"] = {
-      "run_speed" : "value", #Put higher if computer is slow, movement will be less smooth. Put lower if computer is not laging, movement will be smother.
+#This is the default data structure if an object has no data structure in it.
+def SetAsDefaultObject(thisObject):
+    thisObject["General"]= {
+      "run_speed" : "value", #Put higher if computer is slow, movement will be less smooth. Put lower if computer is not lagging, movement will be more smooth.
       "max_x" : "value", #Set as the width (in cm) of the "box" that the camera can fly in.
       "max_y" : "value", #Set as the length (in cm) of the "box" that the camera can fly in.
       "max_z" : "value", #Set as the hight (in cm) of the "box" that the camera can fly in.
       "camera_a" : "value", #Set as half the width (in cm) of the mount connected to the wires.
       "max_movement_speed" : "value", #Set as the speed (in cm/s) of the camera.
-      }
+    }
 
-   file["Motor"] = {
+    thisObject["Motor"] = {
       "drum_radious" : "value", #Set as the radious (in cm) of the drum for the winch stations.
       "drum_gears" : "value", #Set as the number of gears that the drum of the winch has (set to 1 if direct drive.)
       "motor_gears" : "value", #Set as the number of gears that the motor of the winch has (set to 1 if direct drive.)
-      }
+    }
 
-   return
+    return
 
+#Export the data and write it into the file. 
+def ExportDataToFile():
+    with OpenFileTo(write) as dataIntoFile:
+        temporaryData.write(dataIntoFile)
 
+def CheckFileCategories():
+    categoryList = referenceData.sections()
 
-# This recovers and returns information.
-def import_file():
-    global information
-    #Check if the config files exist and setup.
-    valid = read_file()
+    #Does the category exist.
+    for selectedCategory in temporaryData:
+        if selectedCategory in categoryList:
+            CheckFileSubcategories(selectedCategory)
+            categoryList.remove(selectedCategory)
 
-    #Recovers the information from the file into the two Information lists.
-    for category in config.sections():
-        for sub_category in config.options(category):
+        else:
+            #This category should not exist and will be removed.
+            temporaryData.remove_section(selectedCategory)
+            
+    #Add missing categories.
+    for missingCategory in categoryList:
+        temporaryData.add_section(missingCategory)
+        CheckFileSubcategories(missingCategory)
+        categoryList.remove(missingCategory)
 
-            value_str = (sub_category)
-            value_int = (config.get(category, sub_category))
+    ExportDataToFile()
+    
+    return
 
-            information[value_str] = int(value_int)
+def CheckFileSubcategories(selectedCategory):
+    subcategoryList = referenceData.options(selectedCategory)
 
+    #Does the subcategory exist.
+    for selectedSubcategory in temporaryData.options(selectedCategory):
+        if selectedSubcategory in subcategoryList:
+            CheckValue(selectedCategory, selectedSubcategory)
+            subcategoryList.remove(str(selectedSubcategory))
 
+        else:
+            #This subcategory should not exist and will be removed.
+            temporaryData.remove_option(selectedCategory, selectedSubcategory)
 
-    #return (information, valid)
-    return (valid)
+    #Add missing subcategories.
+    for missingSubcategory in subcategoryList:
+        temporaryData.set(selectedCategory, missingSubcategory,
+                          referenceData.get(selectedCategory, missingSubcategory))
+        CheckValue(selectedCategory, missingSubcategory)
+        referenceData.remove_option(selectedCategory, missingSubcategory)
 
+    return
 
+#Check if the value is a integer.
+def CheckValue(selectedCategory, selectedSubcategory):
+    valueNotValid = True
+    
+    try:
+        #If the values are not integers then it will send an error "ValueError".
+        valueRetrieved = int(temporaryData.get(selectedCategory, selectedSubcategory))
 
-#Writes to the file.
-#def export_file(information):
-def export_file():
-    global information
-   
-    #Opens the dictionary.
-    for (key, value) in information.items():
+        #If the value is a positive integer or 0 then allow it to pass.
+        if valueRetrieved >= 0:
+            valueNotValid = False
 
-        #Go through each constant.
-        for category in config.sections():
-            for sub_category in config.options(category):
+    except ValueError:
+        pass
 
-                #Checks if any constants are changed.
-                if information[key] == sub_category:
-                    config.set(category, sub_category, str(information[value]))
+    if valueNotValid:
+        #Send feedback that this value needs to be changed in the file.
+        print("{} in {} needs to be configured.".format(selectedSubcategory, selectedCategory))
 
-                else:
-                    pass
+    return
 
+#This saves the data to the file.
+def ExportFile(exportData):
+        temporaryData = exportData
+        ExportDataToFile()
 
-    #Updates the file with the new values.
-    write_file()
-    return()
-
-
-
-#Write information to the config file.
-def write_file():
-
-  #Create a file to set the catergories and sub_catergories in.
-  with open(file, "w") as file_name:
-      
-      #Write the factory default file.
-      config.write(file_name)
-
-  return
-
-
-
-#This sets up the file.
-name = "config"
-extension = ".ini"
-file = name + extension
+        return
 
 #This allows you to create class/object orientated storage files.
-config = ConfigParser(allow_no_value=True)
-reference = ConfigParser(allow_no_value=True)
+def IntoStorableObject():
+    return ConfigParser(allow_no_value=True)
+
+#This will carry temporary data between the file and reference.
+temporaryData = IntoStorableObject()
+
+#This will be a reference to ensure the data structure is correct.
+referenceData = IntoStorableObject()
+SetAsDefaultObject(referenceData)
+
+fileName = "config.ini"
+
+#Options to access the file.
+write = "w"
+read = "r"

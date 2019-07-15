@@ -143,7 +143,7 @@ def TransferDataOut(selectedCategory, exportObject):
     subcategoryList = temporaryObject.options(selectedCategory)
 
     for selectedSubcategory in subcategoryList:
-        if selectedSubcategory in exportData:
+        if selectedSubcategory in exportObject:
             temporaryObject.set(selectedCategory, selectedSubcategory, str(exportObject[selectedSubcategory]))
 
     return

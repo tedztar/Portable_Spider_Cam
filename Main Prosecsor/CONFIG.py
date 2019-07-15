@@ -1,17 +1,17 @@
 #Import external library.
 from configparser import ConfigParser
 
-#This recovers and returns data from the file. Return (Object.)
+#This recovers and returns data from the file. Return (Object: (String, Data))
 def ImportFile():
     if FileDoesNotExist():
-        SetAsDefaultObject(temporaryData)
+        SetAsDefaultObject(temporaryObject)
         ExportDataToFile()
 
     #Collect data from the file into temporary data. Then get it checked before using it.
-    temporaryData.read(fileName)     
+    temporaryObject.read(fileName)     
     CheckFileCategories()
-    
-    return temporaryData.read(fileName) 
+
+    return mainDataObject
 
 #Does the file exist? If we can read it then it does exist. Return (Boolean.)
 def FileDoesNotExist():
@@ -48,24 +48,24 @@ def SetAsDefaultObject(thisObject):
 #Export the data and write it into the file. 
 def ExportDataToFile():
     with OpenFileTo(write) as dataIntoFile:
-        temporaryData.write(dataIntoFile)
+        temporaryObject.write(dataIntoFile)
 
 def CheckFileCategories():
-    categoryList = referenceData.sections()
+    categoryList = referenceObject.sections()
 
     #Does the category exist.
-    for selectedCategory in temporaryData:
+    for selectedCategory in temporaryObject:
         if selectedCategory in categoryList:
             CheckFileSubcategories(selectedCategory)
             categoryList.remove(selectedCategory)
 
         else:
             #This category should not exist and will be removed.
-            temporaryData.remove_section(selectedCategory)
+            temporaryObject.remove_section(selectedCategory)
             
     #Add missing categories.
     for missingCategory in categoryList:
-        temporaryData.add_section(missingCategory)
+        temporaryObject.add_section(missingCategory)
         CheckFileSubcategories(missingCategory)
         categoryList.remove(missingCategory)
 
@@ -74,24 +74,24 @@ def CheckFileCategories():
     return
 
 def CheckFileSubcategories(selectedCategory):
-    subcategoryList = referenceData.options(selectedCategory)
+    subcategoryList = referenceObject.options(selectedCategory)
 
     #Does the subcategory exist.
-    for selectedSubcategory in temporaryData.options(selectedCategory):
+    for selectedSubcategory in temporaryObject.options(selectedCategory):
         if selectedSubcategory in subcategoryList:
             CheckValue(selectedCategory, selectedSubcategory)
             subcategoryList.remove(str(selectedSubcategory))
 
         else:
             #This subcategory should not exist and will be removed.
-            temporaryData.remove_option(selectedCategory, selectedSubcategory)
+            temporaryObject.remove_option(selectedCategory, selectedSubcategory)
 
     #Add missing subcategories.
     for missingSubcategory in subcategoryList:
-        temporaryData.set(selectedCategory, missingSubcategory,
-                          referenceData.get(selectedCategory, missingSubcategory))
+        temporaryObject.set(selectedCategory, missingSubcategory,
+                          referenceObject.get(selectedCategory, missingSubcategory))
         CheckValue(selectedCategory, missingSubcategory)
-        referenceData.remove_option(selectedCategory, missingSubcategory)
+        referenceObject.remove_option(selectedCategory, missingSubcategory)
 
     return
 
@@ -101,7 +101,7 @@ def CheckValue(selectedCategory, selectedSubcategory):
     
     try:
         #If the values are not integers then it will send an error "ValueError".
-        valueRetrieved = int(temporaryData.get(selectedCategory, selectedSubcategory))
+        valueRetrieved = int(temporaryObject.get(selectedCategory, selectedSubcategory))
 
         #If the value is a positive integer or 0 then allow it to pass.
         if valueRetrieved >= 0:
@@ -114,11 +114,14 @@ def CheckValue(selectedCategory, selectedSubcategory):
         #Send feedback that this value needs to be changed in the file.
         print("{} in {} needs to be configured.".format(selectedSubcategory, selectedCategory))
 
+    #Package data into an object to use.
+    mainDataObject[(str(selectedSubcategory))] = (temporaryObject.get(selectedCategory, selectedSubcategory))
+
     return
 
 #This saves the data to the file.
 def ExportFile(exportData):
-        temporaryData = exportData
+        temporaryObject = exportData
         ExportDataToFile()
 
         return
@@ -128,11 +131,14 @@ def IntoStorableObject():
     return ConfigParser(allow_no_value=True)
 
 #This will carry temporary data between the file and reference.
-temporaryData = IntoStorableObject()
+temporaryObject = IntoStorableObject()
 
 #This will be a reference to ensure the data structure is correct.
-referenceData = IntoStorableObject()
-SetAsDefaultObject(referenceData)
+referenceObject = IntoStorableObject()
+SetAsDefaultObject(referenceObject)
+
+#This will carry the data into the main program.
+mainDataObject = {}
 
 fileName = "config.ini"
 

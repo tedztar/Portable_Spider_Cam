@@ -11,7 +11,7 @@ def ImportFile():
     temporaryObject.read(fileName)     
     CheckFileCategories()
 
-    return mainDataObject
+    return importObject
 
 #Does the file exist? If we can read it then it does exist. Return (Boolean.)
 def FileDoesNotExist():
@@ -80,6 +80,8 @@ def CheckFileSubcategories(selectedCategory):
     for selectedSubcategory in temporaryObject.options(selectedCategory):
         if selectedSubcategory in subcategoryList:
             CheckValue(selectedCategory, selectedSubcategory)
+            TransferDataIn(selectedCategory, selectedSubcategory)
+            
             subcategoryList.remove(str(selectedSubcategory))
 
         else:
@@ -91,11 +93,13 @@ def CheckFileSubcategories(selectedCategory):
         temporaryObject.set(selectedCategory, missingSubcategory,
                           referenceObject.get(selectedCategory, missingSubcategory))
         CheckValue(selectedCategory, missingSubcategory)
-        referenceObject.remove_option(selectedCategory, missingSubcategory)
+        TransferDataIn(selectedCategory, missingSubcategory)
+        
+        subcategoryList.remove(selectedCategory, missingSubcategory)
 
     return
 
-#Check if the value is a integer.
+#Check if the value is a integer. If not, Inform the user.
 def CheckValue(selectedCategory, selectedSubcategory):
     valueNotValid = True
     
@@ -114,17 +118,35 @@ def CheckValue(selectedCategory, selectedSubcategory):
         #Send feedback that this value needs to be changed in the file.
         print("{} in {} needs to be configured.".format(selectedSubcategory, selectedCategory))
 
+    return
+
+#Convert config object into data inside a list.
+def TransferDataIn(selectedCategory, selectedSubcategory):
+
     #Package data into an object to use.
-    mainDataObject[(str(selectedSubcategory))] = (temporaryObject.get(selectedCategory, selectedSubcategory))
+    importObject[(str(selectedSubcategory))] = (temporaryObject.get(selectedCategory, selectedSubcategory))
 
     return
 
-#This saves the data to the file.
-def ExportFile(exportData):
-        temporaryObject = exportData
-        ExportDataToFile()
+#This saves the data to the file. (Calls for an Object: (String, Data))
+def ExportFile(exportObject):
+    categoryList = temporaryObject.sections()
 
-        return
+    for selectedCategory in categoryList:
+        TransferDataOut(selectedCategory, exportObject)
+
+    ExportDataToFile()
+    return
+
+#Convert data from object into an config object.
+def TransferDataOut(selectedCategory, exportObject):
+    subcategoryList = temporaryObject.options(selectedCategory)
+
+    for selectedSubcategory in subcategoryList:
+        if selectedSubcategory in exportData:
+            temporaryObject.set(selectedCategory, selectedSubcategory, str(exportObject[selectedSubcategory]))
+
+    return
 
 #This allows you to create class/object orientated storage files.
 def IntoStorableObject():
@@ -138,7 +160,7 @@ referenceObject = IntoStorableObject()
 SetAsDefaultObject(referenceObject)
 
 #This will carry the data into the main program.
-mainDataObject = {}
+importObject = {}
 
 fileName = "config.ini"
 
